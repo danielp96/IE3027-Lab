@@ -1,0 +1,100 @@
+Pseudo codigo lab2
+
+start isr:
+    if adc:
+        clear adif
+        set adc_flag
+    end
+
+    if tmr:
+        tmr0 <- preload
+        mux_counter++
+        alarm_counter++
+    end
+
+    if portb:
+        b_flags <- portb
+    end
+end isr
+
+
+start setup:
+    config analog_io
+    config io
+    clear ports
+    config oscilator
+    config timer
+    config adc
+    config isr
+end setup
+
+
+start main:
+    call setup
+    loop forever:
+        clear display
+        call mux
+        call adc
+        call push
+        counter_port <- counter
+        call alarm
+    end loop
+
+end main
+
+start alarm
+    if counter == adc_data
+        alarm on
+        alarm_counter <- 0
+    end
+
+    if alarm_counter == alarm_magic_number
+        alarm off
+        alarm_counter <-0
+    end
+end alarm
+
+start push:
+    if inc_push_flag == 1
+        counter++
+    end
+    if dec_push_flag == 0
+        counter--
+    end
+
+end push
+
+
+start mux:
+    if mux_counter != mux_magic_number
+        return
+    end
+    time_counter <- 0
+    if mux_flag == 0
+        mux_flag <- 1
+        call display0
+    end
+    if mux_flag == 1
+        mux_flag <- 0
+        call display1
+    end
+end mux
+
+start display0:
+    npn0 <- 1
+    npn1 <- 0
+    convert low nibble of adc_data to 7segment display
+end display0
+
+start display1:
+    npn0 <- 0
+    npn1 <- 1
+    convert high nibble of adc_data to 7segment display
+end display1
+
+start adc:
+    if adc_flag == 1
+        adc_data <- adresh
+        restart adc
+    end
+end adc

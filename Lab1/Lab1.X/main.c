@@ -157,6 +157,8 @@ void setup(void)
 
 void semaforo(void)
 {
+    PORTA = 0;
+    PORTB = 0;
     
     PORTC = 1;
     __delay_ms(750);

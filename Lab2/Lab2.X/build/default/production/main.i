@@ -2638,9 +2638,11 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 # 38 "main.c" 2
-# 51 "main.c"
+# 52 "main.c"
 uint8_t push_counter = 0;
 uint8_t portb_flags = 0;
+uint8_t push_timer = 0;
+uint8_t mux_timer = 0;
 
 
 
@@ -2674,19 +2676,37 @@ void __attribute__((picinterrupt(("")))) isr(void)
         INTCONbits.RBIF = 0;
         portb_flags = PORTB;
     }
+
+    if (INTCONbits.T0IF)
+    {
+        INTCONbits.T0IF = 0;
+        TMR0 = 6;;
+        push_timer++;
+        mux_timer++;
+
+        PORTC = mux_timer;
+    }
 }
 
 void push_logic(void)
 {
-    if (portb_flags & 0x01)
+    if (200 != push_timer)
+    {
+        return;
+    }
+
+    push_timer = 0;
+
+    if (0x01 == portb_flags)
     {
         push_counter++;
     }
 
-    if (portb_flags & 0x02)
+    if (0x02 == portb_flags)
     {
         push_counter--;
     }
+
     return;
 }
 
@@ -2710,9 +2730,23 @@ void setup(void)
     PORTD = 0;
     PORTE = 0;
 
+
     IOCB = 0x03;
     INTCONbits.RBIE = 1;
+    INTCONbits.T0IE = 1;
     INTCONbits.GIE = 1;
+
+    OSCCON = 0b01100001;
+
+    OPTION_REGbits.T0CS = 0;
+    OPTION_REGbits.PSA = 0;
+    OPTION_REGbits.PS2 = 0;
+    OPTION_REGbits.PS1 = 0;
+    OPTION_REGbits.PS0 = 1;
+
+    TMR0 = 6;;
+
+    INTCONbits.T0IF = 0;
 
     return;
 }

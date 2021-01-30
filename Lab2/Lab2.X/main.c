@@ -40,8 +40,9 @@
 // Defines
 //******************************************************************************
 
-#define _XTAL_FREQ 8000000
+#define _XTAL_FREQ 4000000
 #define tmr_preload 6;
+#define push_debounce_time 200
 
 
 //******************************************************************************
@@ -51,6 +52,7 @@
 uint8_t push_counter = 0;
 uint8_t portb_flags  = 0;
 uint8_t push_timer   = 0;
+uint8_t mux_timer    = 0;
 
 //******************************************************************************
 // function declarations
@@ -90,15 +92,20 @@ void __interrupt() isr(void)
         INTCONbits.T0IF = 0;
         TMR0 = tmr_preload;
         push_timer++;
+        mux_timer++;
+
+        PORTC = mux_timer;
     }
 }
 
 void push_logic(void)
 {
-    if (4 != push_timer)
+    if (push_debounce_time != push_timer)
     {
-        return
+        return;
     }
+
+    push_timer = 0;
 
     if (0x01 == portb_flags)
     {
@@ -136,9 +143,20 @@ void setup(void)
     // portb interrupts
     IOCB = 0x03;
     INTCONbits.RBIE = 1;
+    INTCONbits.T0IE = 1;
     INTCONbits.GIE = 1;
     
+    OSCCON = 0b01100001;
 
+    OPTION_REGbits.T0CS = 0;
+    OPTION_REGbits.PSA = 0;
+    OPTION_REGbits.PS2 = 0;
+    OPTION_REGbits.PS1 = 0;
+    OPTION_REGbits.PS0 = 1;
+
+    TMR0 = tmr_preload;
+
+    INTCONbits.T0IF = 0;
 
     return;
 }

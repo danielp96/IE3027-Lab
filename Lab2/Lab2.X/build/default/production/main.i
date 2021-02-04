@@ -2638,11 +2638,26 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 # 38 "main.c" 2
-# 52 "main.c"
+# 1 "../../libs/adc.X/adc.h" 1
+# 13 "../../libs/adc.X/adc.h"
+void adc_config();
+
+void adc_start();
+
+void adc_select_channel(int channel);
+
+void adc_wait();
+
+void adc_isr_enable();
+
+void adc_isr_disable();
+# 39 "main.c" 2
+# 53 "main.c"
 uint8_t push_counter = 0;
 uint8_t portb_flags = 0;
 uint8_t push_timer = 0;
 uint8_t mux_timer = 0;
+uint8_t adc_data = 0;
 
 
 
@@ -2650,6 +2665,7 @@ uint8_t mux_timer = 0;
 
 void setup(void);
 void push_logic(void);
+void adc_logic(void);
 
 
 
@@ -2664,8 +2680,12 @@ void main(void)
 
 
         push_logic();
+        adc_logic();
 
         PORTD = push_counter;
+
+
+        PORTC = adc_data;
     }
 }
 
@@ -2683,9 +2703,23 @@ void __attribute__((picinterrupt(("")))) isr(void)
         TMR0 = 6;;
         push_timer++;
         mux_timer++;
-
-        PORTC = mux_timer;
     }
+
+    if (PIR1bits.ADIF)
+    {
+        adc_data = ADRESH;
+    }
+}
+
+void adc_logic(void)
+{
+    if (ADCON0bits.GO)
+    {
+        return;
+    }
+
+    adc_wait();
+    adc_start();
 }
 
 void push_logic(void)
@@ -2747,6 +2781,9 @@ void setup(void)
     TMR0 = 6;;
 
     INTCONbits.T0IF = 0;
+
+    adc_config();
+    adc_isr_enable();
 
     return;
 }

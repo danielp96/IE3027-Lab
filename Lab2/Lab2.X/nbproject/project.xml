@@ -8,11 +8,15 @@
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
-            <header-extensions/>
+            <header-extensions>h</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>UTF-8</sourceEncoding>
-            <make-dep-projects/>
-            <sourceRootList/>
+            <make-dep-projects>
+                <make-dep-project>/home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X</make-dep-project>
+            </make-dep-projects>
+            <sourceRootList>
+                <sourceRootElem>../../libs</sourceRootElem>
+            </sourceRootList>
             <confList>
                 <confElem>
                     <name>default</name>

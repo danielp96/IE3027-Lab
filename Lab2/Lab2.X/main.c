@@ -35,6 +35,7 @@
 
 #include <xc.h>
 #include <stdint.h>
+#include "adc.h"
 
 //******************************************************************************
 // Defines
@@ -53,6 +54,7 @@ uint8_t push_counter = 0;
 uint8_t portb_flags  = 0;
 uint8_t push_timer   = 0;
 uint8_t mux_timer    = 0;
+uint8_t adc_data     = 0;
 
 //******************************************************************************
 // function declarations
@@ -60,6 +62,7 @@ uint8_t mux_timer    = 0;
 
 void setup(void);
 void push_logic(void);
+void adc_logic(void);
 
 //******************************************************************************
 // Main
@@ -74,8 +77,12 @@ void main(void)
         // Text goes here
         //**********************************************************************
         push_logic();
+        adc_logic();
 
         PORTD = push_counter;
+
+        // debug
+        PORTC = adc_data;
     }
 }
 
@@ -93,9 +100,23 @@ void __interrupt() isr(void)
         TMR0 = tmr_preload;
         push_timer++;
         mux_timer++;
-
-        PORTC = mux_timer;
     }
+
+    if (PIR1bits.ADIF)
+    {
+        adc_data = ADRESH;
+    }
+}
+
+void adc_logic(void)
+{
+    if (ADCON0bits.GO)
+    {
+        return;
+    }
+
+    adc_wait();
+    adc_start();
 }
 
 void push_logic(void)
@@ -157,6 +178,9 @@ void setup(void)
     TMR0 = tmr_preload;
 
     INTCONbits.T0IF = 0;
+
+    adc_config();
+    adc_isr_enable();
 
     return;
 }

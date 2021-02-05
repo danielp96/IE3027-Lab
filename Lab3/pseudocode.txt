@@ -1,0 +1,62 @@
+seudo codigo lab2
+
+
+start isr:
+    if adc:
+        clear adif
+        if adc_flag1:
+            set adc_flag2
+            clear adc_flag1
+        end
+    end
+
+    if eusart:
+        if received:
+            read eusart
+        end
+
+        if sended:
+            write eusart
+        end
+    end
+
+end isr
+
+
+start setup:
+    config analog_io
+    config io
+    clear ports
+    config oscilator
+    config timer
+    config adc
+    config isr
+    config eusart
+end setup
+
+
+start main:
+    call setup
+    loop forever:
+        call adc
+        call display
+    end loop
+end main
+
+
+start adc:
+    if adc_flag1
+        adc_data1 <- adresh
+    end
+
+    if adc_flag2
+        adc_data2 <- adresh
+    end
+end adc
+
+
+start display
+    display adc_data1
+    display adc_data2
+    display read_from_eusart
+end display

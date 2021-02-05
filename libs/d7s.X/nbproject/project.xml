@@ -3,25 +3,20 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>Lab2</name>
-            <creation-uuid>fdec380d-5d2a-445c-ad88-89ec8572417f</creation-uuid>
+            <name>d7s</name>
+            <creation-uuid>38e5815a-7dee-4e54-b0fc-28278740e361</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
-            <header-extensions/>
+            <header-extensions>h</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>UTF-8</sourceEncoding>
-            <make-dep-projects>
-                <make-dep-project>/home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X</make-dep-project>
-                <make-dep-project>/home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/d7s.X</make-dep-project>
-            </make-dep-projects>
-            <sourceRootList>
-                <sourceRootElem>../../libs</sourceRootElem>
-            </sourceRootList>
+            <make-dep-projects/>
+            <sourceRootList/>
             <confList>
                 <confElem>
                     <name>default</name>
-                    <type>2</type>
+                    <type>3</type>
                 </confElem>
             </confList>
             <formatting>

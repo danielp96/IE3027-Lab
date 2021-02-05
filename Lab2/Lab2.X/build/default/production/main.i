@@ -2652,12 +2652,24 @@ void adc_isr_enable();
 
 void adc_isr_disable();
 # 39 "main.c" 2
-# 53 "main.c"
+# 1 "../../libs/d7s.X/d7s.h" 1
+# 12 "../../libs/d7s.X/d7s.h"
+# 1 "/opt/microchip/xc8/v2.31/pic/include/c90/stdint.h" 1 3
+# 13 "../../libs/d7s.X/d7s.h" 2
+# 1 "/opt/microchip/xc8/v2.31/pic/include/c90/stdbool.h" 1 3
+# 14 "../../libs/d7s.X/d7s.h" 2
+
+uint8_t d7s_bin2hex(uint8_t num);
+void d7s_2display(uint8_t* port, uint8_t data, _Bool sel);
+# 40 "main.c" 2
+# 56 "main.c"
 uint8_t push_counter = 0;
 uint8_t portb_flags = 0;
 uint8_t push_timer = 0;
 uint8_t mux_timer = 0;
 uint8_t adc_data = 0;
+
+_Bool mux_flag = 0;
 
 
 
@@ -2666,6 +2678,7 @@ uint8_t adc_data = 0;
 void setup(void);
 void push_logic(void);
 void adc_logic(void);
+void mux_logic(void);
 
 
 
@@ -2681,11 +2694,9 @@ void main(void)
 
         push_logic();
         adc_logic();
+        mux_logic();
 
         PORTD = push_counter;
-
-
-        PORTC = adc_data;
     }
 }
 
@@ -2709,6 +2720,23 @@ void __attribute__((picinterrupt(("")))) isr(void)
     {
         adc_data = ADRESH;
     }
+}
+
+void mux_logic(void)
+{
+    if (40 != mux_timer)
+    {
+        return;
+    }
+
+    mux_timer = 0;
+
+    mux_flag = !mux_flag;
+
+    PORTE = mux_flag ? 1 : 2;
+
+    d7s_2display(&PORTC, adc_data, mux_flag);
+
 }
 
 void adc_logic(void)

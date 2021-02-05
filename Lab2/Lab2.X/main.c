@@ -36,14 +36,17 @@
 #include <xc.h>
 #include <stdint.h>
 #include "adc.h"
+#include "d7s.h"
 
 //******************************************************************************
 // Defines
 //******************************************************************************
 
 #define _XTAL_FREQ 4000000
+
 #define tmr_preload 6;
 #define push_debounce_time 200
+#define mux_time 40
 
 
 //******************************************************************************
@@ -56,6 +59,8 @@ uint8_t push_timer   = 0;
 uint8_t mux_timer    = 0;
 uint8_t adc_data     = 0;
 
+bool mux_flag = false;
+
 //******************************************************************************
 // function declarations
 //******************************************************************************
@@ -63,6 +68,7 @@ uint8_t adc_data     = 0;
 void setup(void);
 void push_logic(void);
 void adc_logic(void);
+void mux_logic(void);
 
 //******************************************************************************
 // Main
@@ -78,11 +84,9 @@ void main(void)
         //**********************************************************************
         push_logic();
         adc_logic();
+        mux_logic();
 
         PORTD = push_counter;
-
-        // debug
-        PORTC = adc_data;
     }
 }
 
@@ -106,6 +110,23 @@ void __interrupt() isr(void)
     {
         adc_data = ADRESH;
     }
+}
+
+void mux_logic(void)
+{
+    if (mux_time != mux_timer)
+    {
+        return;
+    }
+
+    mux_timer = 0;
+
+    mux_flag = !mux_flag;
+
+    PORTE = mux_flag ? 1 : 2;
+
+    d7s_2display(&PORTC, adc_data, mux_flag);
+
 }
 
 void adc_logic(void)

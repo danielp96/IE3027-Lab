@@ -86,6 +86,8 @@ void main(void)
         adc_logic();
         mux_logic();
 
+        PORTEbits.RE2 = adc_data >= push_counter ? 1 : 0;
+
         PORTD = push_counter;
     }
 }
@@ -123,7 +125,8 @@ void mux_logic(void)
 
     mux_flag = !mux_flag;
 
-    PORTE = mux_flag ? 1 : 2;
+    PORTEbits.RE0 = mux_flag ? 1 : 0;
+    PORTEbits.RE1 = mux_flag ? 0 : 1;
 
     d7s_2display(&PORTC, adc_data, mux_flag);
 

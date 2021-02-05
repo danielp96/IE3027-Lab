@@ -29,13 +29,17 @@ void adc_start()
 // channel must be 0-15
 void adc_select_channel(int channel)
 {
-    ADCON0 |= ((channel & 0x04) << 2);
+    ADCON0bits.CHS0 = (channel >> 0) & 0x01;
+    ADCON0bits.CHS1 = (channel >> 1) & 0x01;
+    ADCON0bits.CHS2 = (channel >> 2) & 0x01;
+    ADCON0bits.CHS3 = (channel >> 3) & 0x01;
 
     return;
 }
 
 void adc_isr_enable()
 {
+    INTCONbits.PEIE = 1;
     PIE1bits.ADIE = 1;
 }
 

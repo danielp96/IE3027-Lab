@@ -13,6 +13,7 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
                 <make-dep-project>/media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X</make-dep-project>
+                <make-dep-project>/media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/eusart.X</make-dep-project>
                 <make-dep-project>/media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/lcd.X</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>

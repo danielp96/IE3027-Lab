@@ -39,6 +39,7 @@
 #include <stdbool.h>
 #include "lcd.h"
 #include "adc.h"
+#include "eusart.h"
 
 //******************************************************************************
 // Defines
@@ -82,10 +83,14 @@ void main(void)
 void __interrupt() isr(void)
 {
 
-    if (INTCONbits.T0IF)
+    if (PIR1bits.TXIF)
     {
-        INTCONbits.T0IF = 0;
-        TMR0 = tmr_preload;
+        TXREG = 'F';
+    }
+
+    if (PIR1bits.RCIF)
+    {
+        PORTB = RCREG;
     }
 
     if (PIR1bits.ADIF)
@@ -129,7 +134,6 @@ void display(uint8_t pot_a, uint8_t pot_b, uint8_t cont)
     lcd_write_char(str[10]);
     lcd_write_char(str[11]);
     lcd_write_char(str[12]);
-
 }
 
 void adc_logic(void)
@@ -196,6 +200,10 @@ void setup(void)
 
     lcd_init();
     lcd_cmd(0x0c); // turn off cursor
+
+    //eusart_init_tx();
+    eusart_init_rx();
+    eusart_enable_rx_isr();
 
     return;
 }

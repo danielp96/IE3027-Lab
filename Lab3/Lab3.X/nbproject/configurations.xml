@@ -75,6 +75,23 @@
                             DD="dist/default/debug/adc.X.a">
               </makeArtifact>
             </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="/media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/eusart.X"
+                            CT="3"
+                            CN="default"
+                            AC="true"
+                            BL="true"
+                            WD="/media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/eusart.X"
+                            BC="${MAKE}  -f Makefile CONF=default"
+                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
+                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
+                            OP="dist/default/production/eusart.X.a"
+                            DOP="dist/default/debug/eusart.X.a"
+                            FL="dist/default/production/eusart.X.a"
+                            PD="dist/default/production/eusart.X.a"
+                            DD="dist/default/debug/eusart.X.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
@@ -105,7 +122,7 @@
         <property key="define-macros" value=""/>
         <property key="disable-optimizations" value="true"/>
         <property key="extra-include-directories"
-                  value="../../libs/lcd.X;../../libs/adc.X"/>
+                  value="../../libs/lcd.X;../../libs/adc.X;../../libs/eusart.X"/>
         <property key="favor-optimization-for" value="-speed,+space"/>
         <property key="garbage-collect-data" value="true"/>
         <property key="garbage-collect-functions" value="true"/>

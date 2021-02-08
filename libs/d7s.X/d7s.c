@@ -8,13 +8,6 @@
 #include "d7s.h"
 
 
-#define D7S_P0
-#define D7S_P1
-#define D7S_P2
-#define D7S_P3
-
-
-
 uint8_t d7s_bin2hex(uint8_t num)
 {
     num &= 0x0F;

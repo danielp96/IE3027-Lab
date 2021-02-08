@@ -10,16 +10,16 @@
 #include <xc.h>
 
 
-void adc_config();
+void adc_config(void);
 
-void adc_start();
+void adc_start(void);
 
 void adc_select_channel(int channel);
 
-void adc_wait();
+void adc_wait(void);
 
-void adc_isr_enable();
+void adc_isr_enable(void);
 
-void adc_isr_disable();
+void adc_isr_disable(void);
 
 #endif /* __ADC__ */

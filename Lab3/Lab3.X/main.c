@@ -34,6 +34,7 @@
 //******************************************************************************
 
 #include <xc.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include "lcd.h"
@@ -53,6 +54,7 @@
 
 uint8_t adc_data1 = 0;
 uint8_t adc_data2 = 0;
+uint8_t uart_cont = 0;
 bool    adc_flag  = false;
 
 //******************************************************************************
@@ -61,6 +63,7 @@ bool    adc_flag  = false;
 
 void setup(void);
 void adc_logic(void);
+void display(uint8_t pot_a,uint8_t pot_b,uint8_t cont);
 
 //******************************************************************************
 // Main
@@ -72,10 +75,7 @@ void main(void)
     while(1) 
     {
         adc_logic();
-
-        PORTB = ADCON0;
-        PORTC = adc_data1;
-        PORTD = adc_data2;
+        display(adc_data1, adc_data2, uart_cont);
     }
 }
 
@@ -103,6 +103,33 @@ void __interrupt() isr(void)
 
         adc_flag = !adc_flag;
     }
+}
+
+void display(uint8_t pot_a, uint8_t pot_b, uint8_t cont)
+{
+    lcd_move_cursor(0,0);
+    lcd_write_string("  S1:  S2:  S3: ");
+    lcd_move_cursor(1,0);
+
+    char* str[16];
+
+    sprintf(str, "%.3iV %.3iV %.3i", pot_a<<1, pot_b<<1, cont);
+    lcd_write_char(str[0]);
+    lcd_write_char('.');
+    lcd_write_char(str[1]);
+    lcd_write_char(str[2]);
+    lcd_write_char(str[3]);
+    lcd_write_char(str[4]);
+    lcd_write_char(str[5]);
+    lcd_write_char('.');
+    lcd_write_char(str[6]);
+    lcd_write_char(str[7]);
+    lcd_write_char(str[8]);
+    lcd_write_char(str[9]);
+    lcd_write_char(str[10]);
+    lcd_write_char(str[11]);
+    lcd_write_char(str[12]);
+
 }
 
 void adc_logic(void)
@@ -166,6 +193,9 @@ void setup(void)
 
     adc_config();
     adc_isr_enable();
+
+    lcd_init();
+    lcd_cmd(0x0c); // turn off cursor
 
     return;
 }

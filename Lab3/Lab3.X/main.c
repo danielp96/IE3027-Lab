@@ -55,8 +55,19 @@
 
 uint8_t adc_data1 = 0;
 uint8_t adc_data2 = 0;
+uint8_t uart_data = 0;
 uint8_t uart_cont = 0;
-bool    adc_flag  = false;
+uint8_t str_pos   = 0;
+
+
+// IMPORTANT
+// for som reason if both string have the same length
+// the las char of str_pot_b overwrites the first char of str_pot_a
+char* str_pot_a[6];
+char* str_pot_b[5];
+
+bool    adc_flag     = false;
+bool    eusart_flag  = false;
 
 //******************************************************************************
 // function declarations
@@ -64,7 +75,7 @@ bool    adc_flag  = false;
 
 void setup(void);
 void adc_logic(void);
-void display(uint8_t pot_a,uint8_t pot_b,uint8_t cont);
+void display(void);
 
 //******************************************************************************
 // Main
@@ -76,21 +87,52 @@ void main(void)
     while(1) 
     {
         adc_logic();
-        display(adc_data1, adc_data2, uart_cont);
+
+        sprintf(str_pot_a, "A%.3iV", adc_data1<<1);
+        sprintf(str_pot_b, "B%.3iV", adc_data2<<1);
+
+        display();
+
+        PORTB = uart_data;
+        if (uart_data == '+')
+        {
+            uart_cont++;
+        }
+
+        if (uart_data == '-')
+        {
+            uart_cont--;
+        }
+        uart_data = 0;
+
     }
 }
 
 void __interrupt() isr(void)
 {
 
-    if (PIR1bits.TXIF)
+    if (PIE1bits.TXIE && PIR1bits.TXIF)
     {
-        TXREG = 'F';
+        if (eusart_flag)
+        {
+            TXREG = str_pot_a[str_pos];
+        }
+        else
+        {
+            TXREG = str_pot_b[str_pos];
+        }
+        str_pos++;
+
+        if (str_pos == 5)
+        {
+            eusart_flag = !eusart_flag;
+            str_pos = 0;
+        }
     }
 
     if (PIR1bits.RCIF)
     {
-        PORTB = RCREG;
+        uart_data = RCREG;
     }
 
     if (PIR1bits.ADIF)
@@ -110,30 +152,34 @@ void __interrupt() isr(void)
     }
 }
 
-void display(uint8_t pot_a, uint8_t pot_b, uint8_t cont)
+void display(void)
 {
     lcd_move_cursor(0,0);
     lcd_write_string("  S1:  S2:  S3: ");
     lcd_move_cursor(1,0);
 
-    char* str[16];
+    char* str[3];
 
-    sprintf(str, "%.3iV %.3iV %.3i", pot_a<<1, pot_b<<1, cont);
-    lcd_write_char(str[0]);
+    sprintf(str, "%.3i", uart_cont);
+
+    lcd_write_char(str_pot_a[1]);
     lcd_write_char('.');
+    lcd_write_char(str_pot_a[2]);
+    lcd_write_char(str_pot_a[3]);
+    lcd_write_char(str_pot_a[4]);
+    lcd_write_char(' ');
+
+    lcd_write_char(str_pot_b[1]);
+    lcd_write_char('.');
+    lcd_write_char(str_pot_b[2]);
+    lcd_write_char(str_pot_b[3]);
+    lcd_write_char(str_pot_b[4]);
+    lcd_write_char(' ');
+
+    lcd_write_char(str[0]);
     lcd_write_char(str[1]);
     lcd_write_char(str[2]);
     lcd_write_char(str[3]);
-    lcd_write_char(str[4]);
-    lcd_write_char(str[5]);
-    lcd_write_char('.');
-    lcd_write_char(str[6]);
-    lcd_write_char(str[7]);
-    lcd_write_char(str[8]);
-    lcd_write_char(str[9]);
-    lcd_write_char(str[10]);
-    lcd_write_char(str[11]);
-    lcd_write_char(str[12]);
 }
 
 void adc_logic(void)
@@ -201,7 +247,9 @@ void setup(void)
     lcd_init();
     lcd_cmd(0x0c); // turn off cursor
 
-    //eusart_init_tx();
+    eusart_init_tx();
+    eusart_enable_tx_isr();
+
     eusart_init_rx();
     eusart_enable_rx_isr();
 

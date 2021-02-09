@@ -6,6 +6,7 @@
 
 // hardcoded to 9600 baudrrate
 // TODO: configurable baudrate
+// TODO: refactor inits
 
 
 #include <xc.h>
@@ -20,7 +21,6 @@ void eusart_init_tx(void)
     RCSTAbits.SPEN = 1;
 
     TXSTAbits.TX9 = 0;
-    RCSTAbits.CREN = 0;
     TXSTAbits.TXEN = 1;
 }
 
@@ -47,7 +47,6 @@ void eusart_init_rx(void)
 
     TXSTAbits.TX9 = 0;
     RCSTAbits.CREN = 1;
-    TXSTAbits.TXEN = 0;
 }
 
 void eusart_enable_rx_isr(void)

@@ -28,9 +28,9 @@ void lcd_clear(void);
 
 void lcd_move_cursor(uint8_t row, uint8_t col);
 
-void lcd_write_char(uint8_t a);
+void lcd_write_char(char a);
 
-void lcd_write_string(uint8_t *a);
+void lcd_write_string(char* a);
 
 void lcd_shift_right(void);
 

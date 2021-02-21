@@ -72,17 +72,17 @@ void lcd_move_cursor(uint8_t row, uint8_t col)
     }
 }
 
-void lcd_write_char(uint8_t data)
+void lcd_write_char(char data)
 {
     RS = 1;             // => RS = 1
-    lcd_port(data);
+    lcd_port((uint8_t)data);
 
     EN  = 1;             // => E = 1
     __delay_ms(4);
     EN  = 0;             // => E = 0
 }
 
-void lcd_write_string(uint8_t *a)
+void lcd_write_string(char* a)
 {
     for(int i=0; a[i] != '\0'; i++)
     {

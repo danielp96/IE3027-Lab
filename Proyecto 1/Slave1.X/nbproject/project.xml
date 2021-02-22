@@ -13,6 +13,7 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
                 <make-dep-project>../../libs/adc.X</make-dep-project>
+                <make-dep-project>../../libs/spi.X</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>
             <confList>

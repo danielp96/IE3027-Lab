@@ -35,6 +35,7 @@
 
 #include <xc.h>
 #include <stdint.h>
+#include "spi.h"
 
 //******************************************************************************
 // Defines
@@ -54,6 +55,8 @@ uint8_t push_counter = 0;
 uint8_t portb_flags  = 0;
 uint8_t push_timer   = 0;
 
+uint8_t trash; // to read and discard incoming spi
+
 
 //******************************************************************************
 // function declarations
@@ -71,9 +74,6 @@ void main(void)
     setup();
     while(1) 
     {
-        //**********************************************************************
-        // Text goes here
-        //**********************************************************************
         push_logic();
         
         PORTD = push_counter;
@@ -93,6 +93,13 @@ void __interrupt() isr(void)
         INTCONbits.T0IF = 0;
         TMR0 = tmr_preload;
         push_timer++;
+    }
+
+    if (PIR1bits.SSPIF)
+    {
+        trash = SSPBUF;
+        SSPBUF = push_counter;
+        PIR1bits.SSPIF = 0;
     }
 
 }
@@ -124,12 +131,12 @@ void push_logic(void)
 //******************************************************************************
 void setup(void)
 {
-    ANSEL  = 0x01;
+    ANSEL  = 0x00;
     ANSELH = 0x00;
     
-    TRISA = 0x00;
+    TRISA = 0x20;
     TRISB = 0x03;
-    TRISC = 0x00;
+    TRISC = 0x18;
     TRISD = 0x00;
     TRISE = 0x00;
     
@@ -157,6 +164,8 @@ void setup(void)
     TMR0 = tmr_preload;
 
     INTCONbits.T0IF = 0;
+
+    spi_init(SPI_SLAVE_SS_EN, SPI_DATA_SAMPLE_MIDDLE, SPI_CLOCK_IDLE_LOW, SPI_IDLE_2_ACTIVE);
 
     return;
 }

@@ -36,6 +36,7 @@
 #include <xc.h>
 #include <stdint.h>
 #include "adc.h"
+#include "spi.h"
 
 //******************************************************************************
 // Defines
@@ -49,6 +50,7 @@
 
 uint8_t adc_data = 0;
 
+uint8_t trash; // to read and discard incoming spi
 
 //******************************************************************************
 // function declarations
@@ -93,6 +95,13 @@ void __interrupt() isr(void)
 
         adc_data = ADRESH;
     }
+
+    if (PIR1bits.SSPIF)
+    {
+        trash = SSPBUF;
+        SSPBUF = adc_data;
+        PIR1bits.SSPIF = 0;
+    }
 }
 
 void adc_logic(void)
@@ -114,9 +123,9 @@ void setup(void)
     ANSEL  = 0x09;
     ANSELH = 0x00;
     
-    TRISA = 0x09;
+    TRISA = 0x29;
     TRISB = 0x00;
-    TRISC = 0x80;
+    TRISC = 0x18;
     TRISD = 0x00;
     TRISE = 0x00;
     
@@ -145,6 +154,8 @@ void setup(void)
     adc_isr_enable();
 
     ADCON1bits.VCFG0 = 1;
+
+    spi_init(SPI_SLAVE_SS_EN, SPI_DATA_SAMPLE_MIDDLE, SPI_CLOCK_IDLE_LOW, SPI_IDLE_2_ACTIVE);
 
     return;
 }

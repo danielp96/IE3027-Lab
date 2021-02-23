@@ -71,14 +71,15 @@ bool next_slave = 0;
 // IMPORTANT
 // for some reason if both string have the same length
 // the last char of str_pot_b overwrites the first char of str_pot_a
-char* str_pot_a[6];
+char* str_pot_a[5];
 char* str_pot_b[5];
-//char* str_pot_c[5];
+char* str_pot_c[5];
 
 // IMPORTANT
 // compilers dies from "complex expression" if not done like this >:v
 char* stra = (char*)str_pot_a;
 char* strb = (char*)str_pot_b;
+char* strc = (char*)str_pot_c;
 //******************************************************************************
 // function declarations
 //******************************************************************************
@@ -111,6 +112,8 @@ void main(void)
         
         sprintf(strb, "B%.3i:", push_data);
 
+        sprintf(strc, "C%.3i:", temp_data);
+
         display();
 
 
@@ -126,7 +129,7 @@ void __interrupt() isr(void)
     {
         TXREG = (volatile unsigned char)str_pot_a[str_pos];
         
-        str_pos = str_pos == 6? 0: str_pos+1;
+        str_pos = str_pos == 5? 0: str_pos+1;
 
     }
 
@@ -178,11 +181,6 @@ void display(void)
     lcd_write_string(header_str);
     lcd_move_cursor(1,0);
 
-    char* str3[3];
-    char* strc = (char*)str3;
-
-    sprintf(strc, "%.3i", temp_data);
-
     lcd_write_char(stra[1]);
     lcd_write_char('.');
     lcd_write_char(stra[2]);
@@ -195,7 +193,9 @@ void display(void)
     lcd_write_char(strb[3]);
     lcd_write_string("  ");
 
-    lcd_write_string(strc);
+    lcd_write_char(strc[1]);
+    lcd_write_char(strc[2]);
+    lcd_write_char(strc[3]);
     lcd_write_char('C');
 }
 

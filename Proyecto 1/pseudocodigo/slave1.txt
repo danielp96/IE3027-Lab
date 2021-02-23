@@ -1,0 +1,32 @@
+
+setup:
+    configurar puertos
+    configurar adc
+    configurar spi
+    configurar isr
+
+main:
+    setup
+
+    loop:
+        adc_logic
+    end
+
+adc_logic:
+    if ADC GO:
+        return
+    end
+
+    start_adc
+
+isr:
+    if adc flag:
+        clear adc flag
+        adc_data <- adresh
+    end
+
+    if spi flag:
+        trash <- sspbuf
+        sspbuf <- adc_data
+        clear spi flag
+    end

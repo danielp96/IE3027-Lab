@@ -1,0 +1,102 @@
+
+setup:
+    configurar puertos
+    configurar lcd
+    configurar uart
+    configurar spi
+    configurar isr
+
+main:
+    setup
+    loop:
+        set_next_slave
+        prepare_uart_data
+        display
+    end
+
+isr:
+    if tx flag:
+        TXREG <- uart_data
+        next_uart <- true
+    end
+
+    if spi buffer_full:
+        spi_data <- sspbuf
+        next_slave <- true
+    end
+
+    if spi flag:
+        clear spi flag
+        sspbuf <- 0xAA
+    end
+
+
+display:
+    print "  S1:  S2:  S3: "
+    print string pot_data
+    print " "
+    print string push_data
+    print " "
+    print string temp_data
+
+set_next_slave:
+    
+    if !next_slave:
+        return
+    end
+
+    next_slave <- false
+
+    if slave_num == 1:
+        pot_data <- spi_data
+        porta <- 5
+    end
+
+    elif slave_num == 2:
+        push_data <- spi_data
+        porta <- 3
+    end
+
+    elif slave_num == 3:
+        temp_data <- spi_data
+        porta <- 6
+    end
+
+    else:
+        slave_num <- 0
+    end
+
+prepare_uart_data:
+    
+    if !next_uart:
+        return
+    end
+
+    next_uart <- false
+
+    elif uart_num == 1:
+        uart_data <- stra[str_pos]
+        porta <- 5
+    end
+
+    elif uart_num == 2:
+        uart_data <- strb[str_pos]
+        porta <- 3
+    end
+
+    elif uart_num == 3:
+        uart_data <- strc[str_pos]
+        porta <- 6
+    end
+
+    else:
+        uart_num <- 0
+        uart_data <- 0
+    end
+
+    str_pos++
+
+    if str_pos == 5:
+        str_pos <- 0
+        uart_num++
+    end

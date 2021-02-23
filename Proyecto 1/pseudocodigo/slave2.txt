@@ -1,0 +1,45 @@
+
+setup:
+    configurar puertos
+    configurar portb
+    configurar timer0
+    configurar isr
+
+
+main:
+    setup
+
+    loop:
+        push_logic
+    end
+
+push_logic:
+    
+    if debounce_time != push_timer:
+        return
+    end
+
+    if push1:
+        push_counter++
+    end
+
+    if push2:
+        push_counter--
+    end
+
+isr:
+    if portb flag:
+        save portb
+    end
+
+    if timer0 flag:
+        clear timer0 flag
+        timer0 <- preload
+        push_timer++
+    end
+
+    if spi flag:
+        trash <- sspbuf
+        sspbuf <- push_counter
+        clear spi flag
+    end

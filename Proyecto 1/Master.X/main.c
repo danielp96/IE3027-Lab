@@ -61,18 +61,21 @@ uint8_t pot_data  = 3;
 uint8_t push_data = 7;
 uint8_t temp_data = 9;
 uint8_t spi_data  = 0;
+
+uint8_t uart_data = 0;
+uint8_t uart_num  = 1;
 uint8_t str_pos   = 0;
+bool    next_uart = 0;
 
 uint8_t slave_num = 1;
-
-bool next_slave = 0;
+bool   next_slave = 0;
 
 
 // IMPORTANT
 // for some reason if both string have the same length
 // the last char of str_pot_b overwrites the first char of str_pot_a
-char* str_pot_a[5];
-char* str_pot_b[5];
+char* str_pot_a[7];
+char* str_pot_b[6];
 char* str_pot_c[5];
 
 // IMPORTANT
@@ -87,6 +90,7 @@ char* strc = (char*)str_pot_c;
 void setup(void);
 void display(void);
 void set_next_slave(void);
+void prepare_uart_data(void);
 
 //******************************************************************************
 // Main
@@ -108,14 +112,17 @@ void main(void)
             PIR1bits.SSPIF = 0;
         }
 
-        sprintf(stra, "A%.3i:", pot_data);
-        
-        sprintf(strb, "B%.3i:", push_data);
 
-        sprintf(strc, "C%.3i:", temp_data);
+        prepare_uart_data();
+
+        if (next_slave)
+        {
+            sprintf(stra, "A%.3i:", pot_data);
+            sprintf(strb, "B%.3i:", push_data);
+            sprintf(strc, "C%.3i:", temp_data);
+        }
 
         display();
-
 
         PORTB = slave_num;
 
@@ -127,10 +134,8 @@ void __interrupt() isr(void)
 
     if (PIE1bits.TXIE && PIR1bits.TXIF)
     {
-        TXREG = (volatile unsigned char)str_pot_a[str_pos];
-        
-        str_pos = str_pos == 5? 0: str_pos+1;
-
+        TXREG = (volatile unsigned char)uart_data;
+        next_uart = true;
     }
 
     if (SSPSTATbits.BF)
@@ -140,6 +145,43 @@ void __interrupt() isr(void)
         next_slave = true;
         slave_num++;
         slave_num &= 0x03;
+    }
+}
+
+void prepare_uart_data(void)
+{
+    if (!next_uart)
+    {
+        return;
+    }
+
+    next_uart = false;
+
+    switch (uart_num)
+    {
+        case 1:
+            uart_data = (uint8_t)str_pot_a[str_pos];
+            break;
+
+        case 2:
+            uart_data = (uint8_t)str_pot_b[str_pos];
+            break;
+
+        case 3:
+            uart_data = (uint8_t)str_pot_c[str_pos];
+            break;
+
+        default:
+            uart_num = 0;
+            uart_data = 0x00;
+            break;
+    }
+    str_pos++;
+
+    if (5 == str_pos)
+    {
+        str_pos = 0;
+        uart_num++;
     }
 }
 

@@ -72,8 +72,8 @@ bool   next_slave = 0;
 
 
 // IMPORTANT
-// for some reason if both string have the same length
-// the last char of str_pot_b overwrites the first char of str_pot_a
+// for some reason if strings have the same length
+// the last char of next string overwrites the first char previous string
 char* str_pot_a[7];
 char* str_pot_b[6];
 char* str_pot_c[5];
@@ -136,6 +136,9 @@ void __interrupt() isr(void)
     {
         TXREG = (volatile unsigned char)uart_data;
         next_uart = true;
+
+        // disable uart interrupt to avoid sending same character multiple times
+        PIE1bits.TXIE = 0;
     }
 
     if (SSPSTATbits.BF)
@@ -183,6 +186,8 @@ void prepare_uart_data(void)
         str_pos = 0;
         uart_num++;
     }
+
+    PIE1bits.TXIE = 1;
 }
 
 void set_next_slave(void)

@@ -2696,6 +2696,7 @@ void main(void)
         adc_logic();
         mux_logic();
 
+
         PORTEbits.RE2 = adc_data >= push_counter ? 1 : 0;
 
         PORTD = push_counter;
@@ -2802,6 +2803,7 @@ void setup(void)
     INTCONbits.GIE = 1;
 
     OSCCON = 0b01100001;
+
 
     OPTION_REGbits.T0CS = 0;
     OPTION_REGbits.PSA = 0;

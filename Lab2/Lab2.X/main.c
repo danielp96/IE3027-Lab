@@ -85,7 +85,8 @@ void main(void)
         push_logic();
         adc_logic();
         mux_logic();
-
+        
+        //alarm
         PORTEbits.RE2 = adc_data >= push_counter ? 1 : 0;
 
         PORTD = push_counter;
@@ -193,6 +194,7 @@ void setup(void)
     
     OSCCON = 0b01100001;
 
+    // oscillator and prescaler
     OPTION_REGbits.T0CS = 0;
     OPTION_REGbits.PSA = 0;
     OPTION_REGbits.PS2 = 0;

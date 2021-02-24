@@ -3,7 +3,7 @@
  * Author          : Ligo George
  * Company         : electroSome
  * Project         : SPI Library for MPLAB XC8
- * Microcontroller : PIC 16F877A
+ * Microcontroller : PIC 16F887
  * Created on April 15, 2017, 5:59 PM
  */
 
@@ -44,7 +44,7 @@ unsigned spi_data_ready() //Check whether the data is ready to read
         return 0;
 }
 
-char spi_read() //REad the received data
+char spi_read() //Read the received data
 {
     spi_receive_wait();        // wait until the all bits receive
     return(SSPBUF); // read the received data from the buffer

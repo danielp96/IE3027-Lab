@@ -7,9 +7,9 @@
 [v _adc_config adc_config `(v  1 e 1 0 ]
 "22
 [v _adc_start adc_start `(v  1 e 1 0 ]
-"37
+"40
 [v _adc_isr_enable adc_isr_enable `(v  1 e 1 0 ]
-"47
+"51
 [v _adc_wait adc_wait `(v  1 e 1 0 ]
 "10 /opt/microchip/xc8/v2.31/pic/sources/c90/common/sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
@@ -19,21 +19,21 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"18 d7s.c
+"11 d7s.c
 [v _d7s_bin2hex d7s_bin2hex `(uc  1 e 1 0 ]
-"97
+"90
 [v _d7s_2display d7s_2display `(v  1 e 1 0 ]
 "77 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
 [v _main main `(v  1 e 1 0 ]
-"95
+"96
 [v _isr isr `II(v  1 e 1 0 ]
-"117
+"118
 [v _mux_logic mux_logic `(v  1 e 1 0 ]
-"135
+"136
 [v _adc_logic adc_logic `(v  1 e 1 0 ]
-"146
+"147
 [v _push_logic push_logic `(v  1 e 1 0 ]
-"171
+"172
 [v _setup setup `(v  1 e 1 0 ]
 "59 /opt/microchip/mplabx/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8/pic/include/proc/pic16f887.h
 [v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
@@ -134,7 +134,7 @@
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1664
 [v _TRISE TRISE `VEuc  1 e 1 @137 ]
-[s S450 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S468 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -143,8 +143,8 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1718
-[u S458 . 1 `S450 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES458  1 e 1 @140 ]
+[u S476 . 1 `S468 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES476  1 e 1 @140 ]
 "1862
 [v _OSCCON OSCCON `VEuc  1 e 1 @143 ]
 "2416
@@ -177,70 +177,70 @@
 "77
 [v _main main `(v  1 e 1 0 ]
 {
-"93
+"94
 } 0
-"171
+"172
 [v _setup setup `(v  1 e 1 0 ]
 {
-"210
+"212
 } 0
-"37 /home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X/adc.c
+"40 /home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X/adc.c
 [v _adc_isr_enable adc_isr_enable `(v  1 e 1 0 ]
 {
-"40
+"44
 } 0
 "11
 [v _adc_config adc_config `(v  1 e 1 0 ]
 {
 "20
 } 0
-"146 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
+"147 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
 [v _push_logic push_logic `(v  1 e 1 0 ]
 {
-"166
+"167
 } 0
-"117
+"118
 [v _mux_logic mux_logic `(v  1 e 1 0 ]
 {
-"133
+"134
 } 0
-"97 d7s.c
+"90 d7s.c
 [v _d7s_2display d7s_2display `(v  1 e 1 0 ]
 {
 [v d7s_2display@port port `*.39uc  1 p 2 0 ]
 [v d7s_2display@data data `uc  1 p 1 2 ]
 [v d7s_2display@sel sel `a  1 p 1 3 ]
-"107
+"100
 } 0
-"18
+"11
 [v _d7s_bin2hex d7s_bin2hex `(uc  1 e 1 0 ]
 {
 [v d7s_bin2hex@num num `uc  1 a 1 wreg ]
-"22
+"15
 [v d7s_bin2hex@hex hex `uc  1 a 1 6 ]
-"18
+"11
 [v d7s_bin2hex@num num `uc  1 a 1 wreg ]
-"20
+"13
 [v d7s_bin2hex@num num `uc  1 a 1 5 ]
-"95
+"88
 } 0
-"135 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
+"136 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
 [v _adc_logic adc_logic `(v  1 e 1 0 ]
 {
-"144
+"145
 } 0
-"47 /home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X/adc.c
+"51 /home/daniel/UVG/Ciclo7/Digital 2/Laboratorios/libs/adc.X/adc.c
 [v _adc_wait adc_wait `(v  1 e 1 0 ]
 {
-"61
+"65
 } 0
 "22
 [v _adc_start adc_start `(v  1 e 1 0 ]
 {
 "27
 } 0
-"95 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
+"96 /media/Win10/Users/Daniel/UVG/Ciclo7/Digital 2/Laboratorios/Lab2/Lab2.X/main.c
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"115
+"116
 } 0

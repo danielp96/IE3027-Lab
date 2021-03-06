@@ -7,3 +7,22 @@
 /libs/lcd.X/dist/
 /Lab3/Lab3.X/dist/
 *.mp4
+/libs/eusart.X/build/
+/libs/eusart.X/dist/
+/Proyecto 1/Slave2.X/dist/
+/Proyecto 1/Slave2.X/build/
+/Proyecto 1/Slave1.X/dist/
+/Proyecto 1/Slave1.X/build/
+/Proyecto 1/Slave3.X/dist/
+/Proyecto 1/Slave3.X/build/
+/Proyecto 1/Master.X/build/
+/Proyecto 1/Master.X/dist/
+/libs/spi.X/build/
+/libs/spi.X/dist/
+/libs/test.X/build/
+/libs/test.X/dist/
+/libs/test2.X/build/
+/libs/test2.X/dist/
+/Miniproyecto i2c/Miniproyecto_i2c.X/dist/
+/Miniproyecto i2c/Miniproyecto_i2c.X/build/
+/libs/i2c.X/build/

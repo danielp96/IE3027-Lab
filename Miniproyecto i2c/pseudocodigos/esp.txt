@@ -1,0 +1,27 @@
+
+setup:
+    config serial
+    connect to adafruit.io
+    configure led1 callback
+    configure led2 callback
+
+
+loop:
+    io.run()
+
+    if serial available:
+        data <- serial
+        send data to adafruit io
+    end
+
+led callback:
+    if data == "ON":
+        set bit in msg
+    end
+
+
+    if data == "OFF":
+        clear bit in msg
+    end
+
+    send msg to uart

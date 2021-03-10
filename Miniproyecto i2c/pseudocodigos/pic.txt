@@ -1,0 +1,40 @@
+pseudo codigo lab2
+
+
+start isr:
+
+    if eusart:
+        if received:
+            read eusart
+        end
+
+        if sended:
+            write eusart
+        end
+    end
+
+end isr
+
+
+start setup:
+    config io
+    clear ports
+    config oscilator
+    config isr
+    config eusart
+    config i2c
+end setup
+
+
+start main:
+    call setup
+    loop forever:
+        set sensor as write
+        send register address
+        set sensor as read
+        read register value
+
+        PORTA <- uart_data
+        PORTB <- uart_data
+    end loop
+end main

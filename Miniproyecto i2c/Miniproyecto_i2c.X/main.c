@@ -14,7 +14,7 @@
 #pragma config FOSC = INTRC_NOCLKOUT
 #pragma config WDTE = OFF       
 #pragma config PWRTE = OFF      
-#pragma config MCLRE = OFF      
+#pragma config MCLRE = ON      
 #pragma config CP = OFF         
 #pragma config CPD = OFF        
 #pragma config BOREN = OFF      
@@ -84,7 +84,7 @@ void main(void)
         
         PORTA = uart_data;
 
-        PORTB = i2c_data;
+        PORTB = uart_data;
     }
 }
 
@@ -93,7 +93,6 @@ void __interrupt() isr(void)
 
     if (PIE1bits.TXIE && PIR1bits.TXIF)
     {
-        //TXREG = 0x41;
         TXREG = i2c_data;
     }
 

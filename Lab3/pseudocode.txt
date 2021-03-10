@@ -1,4 +1,4 @@
-seudo codigo lab2
+pseudo codigo lab2
 
 
 start isr:

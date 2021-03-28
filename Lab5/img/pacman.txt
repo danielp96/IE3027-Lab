@@ -1,0 +1,17 @@
++--------------------------------+
+|            ........            |
+|        ....oooooooo:....       |
+|      ..oooooooooooooooo:..     |
+|      oooooooooooooooooooo:     |
+|    ~~oooooooooooooooo+:::~     |
+|   .oooooooooooo::::::.         |
+|   .oooooooo::::.               |
+|   .oooooooo~...                |
+|   .oooooooooooo:~~.~~.         |
+|    ::oooooooooooooooo:~~~.     |
+|      oooooooooooooooooooo:     |
+|      ::oooooooooooooooo+:.     |
+|        ~:::oooooooo+:::.       |
+|            ~::~~:~:.           |
+|                                |
++--------------------------------+

@@ -40,33 +40,33 @@ int main(void)
 
             // blink
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
-            SysCtlDelay(DELAY/2);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
-            SysCtlDelay(DELAY/2);
-
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
-            SysCtlDelay(DELAY/2);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
-            SysCtlDelay(DELAY/2);
-
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
-            SysCtlDelay(DELAY/2);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
-            SysCtlDelay(DELAY/2);
-
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
-            SysCtlDelay(DELAY/2);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
-            SysCtlDelay(DELAY/2);
-
+            SysCtlDelay(DELAY/4);
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
             SysCtlDelay(DELAY/4);
+
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
+            SysCtlDelay(DELAY/4);
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
+            SysCtlDelay(DELAY/4);
+
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
+            SysCtlDelay(DELAY/4);
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
+            SysCtlDelay(DELAY/4);
+
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GREEN);
+            SysCtlDelay(DELAY/4);
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
+            SysCtlDelay(DELAY/4);
+
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
+            SysCtlDelay(DELAY/2);
 
             // yellow
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, YELLOW);
             SysCtlDelay(DELAY);
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, OFF);
-            SysCtlDelay(DELAY/4);
+            SysCtlDelay(DELAY/2);
 
             // red
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, RED);

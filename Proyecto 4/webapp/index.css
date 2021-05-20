@@ -1,0 +1,45 @@
+body
+{
+    background-color: #e6e6e6;
+}
+
+#panel
+{
+    position: absolute;
+    width: 350px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #bfbfbf;
+    padding: 2px;
+    margin-left: calc(50% - 175px);
+}
+
+.display
+{
+    border-radius: 3px;
+    border: 1px solid #bfbfbf;
+    padding: 3px;
+    text-align: center;
+    height: calc(80vh/4);
+}
+
+table
+{
+    width: 100%;
+}
+
+/* mobile */
+@media only screen and (max-width: 1000px)
+{
+    #panel
+    {
+        width: 98%;
+        margin-left: 0;
+    }
+
+    .display
+    {
+        height: calc(97vh/4);
+        font-size: 45px;
+    }
+}

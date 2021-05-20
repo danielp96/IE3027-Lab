@@ -54,6 +54,7 @@ void loop()
         }
         else
         {
+            Serial.println(text);
             Serial.println("File not found.");
         }
     }

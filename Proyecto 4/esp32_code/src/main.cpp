@@ -13,8 +13,8 @@
 #include <AsyncTCP.h>
 #include "ESPAsyncWebServer.h"
 
-const char* ssid = "TigoStar_Pineda";
-const char* password = "Pineda.Tigo.Wifi";
+const char* ssid = "";
+const char* password = "";
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
@@ -102,7 +102,7 @@ void loop(void)
         msg += "}";
 
         ws.textAll(msg);
-        Serial.print("Sending WebSocket Message");
+        Serial.println("Sending WebSocket Message");
 
     }
 }
